@@ -9,6 +9,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <deque>
 
 using namespace std;
 
@@ -31,25 +32,51 @@ int getdir (string dir, vector<string> &files)
 
 int main()
 {
+    deque<string> myWords; //new deck with no words
     string dir = string("sm_doc_set");
     vector<string> files = vector<string>();
 
     getdir(dir,files);
 
-    //for (unsigned int i = 0;i < files.size();i++) {
-      //  cout << i << files[i] << endl;
-    //}
+    for (unsigned int i = 0;i < files.size();i++) {
+        cout << i << files[i] << endl;
+    }
 
     ifstream inFile;
-    inFile.open(files[2]);
+    cout<<endl;
+    cout<<files[2];
+    cout<<endl;
+    cout<<getdir(dir,files);
+    string str = "sm_doc_set/" + files[2];
+    inFile.open(str.c_str());
     if(inFile.is_open()){
         cout << "File Open" << endl;
     }
 
     string s;
-    inFile >> s;
+    //inFile >> s;
 
-    cout << s << endl;
+    //cout << s << endl;
+    cout<<endl;
+    while(inFile) {
+        inFile>>s;
+        cout<<s<<" ";
+        myWords.push_back(s);
+    }
+    cout<<endl;
+
+    deque<string>::iterator it = myWords.begin();
+
+    while (myWords.size() > 5) {
+        for (int i = 0; i < 6; i++) {
+            cout << *it << " ";
+            it++;
+        }
+        myWords.pop_front();
+        it = myWords.begin();
+        cout<<endl;
+    }
+
 
     return 0;
 }
