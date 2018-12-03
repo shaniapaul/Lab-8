@@ -47,7 +47,7 @@ int main()
     cout<<files[2];
     cout<<endl;
     cout<<getdir(dir,files);
-    string str = "sm_doc_set/" + files[2];
+    string str = "sm_doc_set/" + files[2]; //change to 2
     inFile.open(str.c_str());
     if(inFile.is_open()){
         cout << "File Open" << endl;
@@ -61,13 +61,25 @@ int main()
     while(inFile) {
         inFile>>s;
         cout<<s<<" ";
+
+        int i = 0;
+        while (i<s.length()) {
+            if (s[i] > 64 && s[i] < 91) {
+                s[i] = s[i] + 32;
+            }
+            if (s[i] < 97 || s[i] > 122) {
+                s.erase(i,1);
+                i--;
+            }
+            i++;
+        }
         myWords.push_back(s);
     }
     cout<<endl;
 
     deque<string>::iterator it = myWords.begin();
 
-    while (myWords.size() > 5) {
+    while (myWords.size() > 6) {
         for (int i = 0; i < 6; i++) {
             cout << *it << " ";
             it++;
